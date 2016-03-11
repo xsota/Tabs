@@ -9,6 +9,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,12 +26,25 @@ public class MainActivity extends FragmentActivity {
   ViewPagerAdapter viewPagerAdapter;
   FragmentManager fragmentManager;
 
+int i = 0 ;
+
   @OnClick(R.id.un)
   public void un(){
-    viewPagerAdapter.emptyFragment.unko();
+    if(i >= 3){
+      i = 0;
+    }
+//    viewPagerAdapter.emptyFragment.unko();
+    viewPagerAdapter.fragments.get(i).unko();
     Log.d("aaaaa","lkjas;flkjas");
+    viewPagerAdapter.notifyDataSetChanged();
+    i ++;
+
   }
 
+  @OnClick(R.id.unun)
+  public void unun() {
+    viewPagerAdapter.fragments.get(0).back();
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +69,20 @@ public class MainActivity extends FragmentActivity {
   }
 
   public class ViewPagerAdapter extends FragmentPagerAdapter {
-    public EmptyFragment emptyFragment;
+    public ArrayList<EmptyFragment> fragments;
+
+
     public ViewPagerAdapter(FragmentManager fm) {
       super(fm);
+
+      fragments = new ArrayList<EmptyFragment>();
+      fragments.add(new EmptyFragment());
+      fragments.add(new EmptyFragment());
+      fragments.add(new EmptyFragment());
     }
+
+
+
 
     @Override
     public int getItemPosition(Object object) {
@@ -65,11 +91,13 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public Fragment getItem(int position) {
-      if(position == 0){
-        emptyFragment = new EmptyFragment();
-        return emptyFragment;
-      }
-      return new UnkoFragment();
+      //if(position == 0){
+      //  emptyFragment = new EmptyFragment();
+      //  return emptyFragment;
+      //}
+
+     return fragments.get(position);
+      // return new UnkoFragment();
     }
 
     @Override

@@ -24,11 +24,21 @@ public  View view;
     return view;
   }
 
+  public void back(){
+    getChildFragmentManager().popBackStack();
+  }
+
   public void unko (){
     /// R.id.containerにfragmentあたっちする
    // view.findViewById(R.id.container);
-    getFragmentManager().beginTransaction()
+    //getFragmentManager()
+
+    getChildFragmentManager()
+      .beginTransaction()
         .add(R.id.container, new UnkoFragment())
-        .commit();
+      .addToBackStack(null)
+        //.commit()
+    .commitAllowingStateLoss()
+      ;
   }
 }
