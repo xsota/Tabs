@@ -18,9 +18,13 @@ public class UnkoFragment extends Fragment {
 
   @OnClick(R.id.button)
   public void unkounko(){
-    //getChildFragmentManager().popBackStack();
-    getActivity().getFragmentManager().popBackStack();
-    Log.d("unko","unko");
+    getParentFragment().getChildFragmentManager()
+      .beginTransaction()
+      .add(R.id.container, new UnkoFragment())
+      .addToBackStack(null)
+      //  .commit()
+      .commitAllowingStateLoss()
+    ;
   }
 
   @Override

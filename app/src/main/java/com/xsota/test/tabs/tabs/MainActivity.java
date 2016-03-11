@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -64,8 +65,6 @@ int i = 0 ;
     viewPager.setAdapter(viewPagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
 
-
-
   }
 
   public class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -75,8 +74,16 @@ int i = 0 ;
     public ViewPagerAdapter(FragmentManager fm) {
       super(fm);
 
+      Bundle args = new Bundle();
+//      args.putSerializable("fragment", (Serializable) new UnkoFragment());
+
+
       fragments = new ArrayList<EmptyFragment>();
-      fragments.add(new EmptyFragment());
+
+      EmptyFragment f = new EmptyFragment(new UnkoFragment());
+
+
+      fragments.add(f);
       fragments.add(new EmptyFragment());
       fragments.add(new EmptyFragment());
     }

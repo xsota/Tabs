@@ -11,6 +11,17 @@ import android.view.ViewGroup;
  */
 public class EmptyFragment extends Fragment {
 public  View view;
+
+  Fragment fragment;
+boolean hoge = true;
+  public EmptyFragment(){
+
+  }
+
+  public EmptyFragment(Fragment _fragment){
+    fragment = _fragment;
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -21,7 +32,26 @@ public  View view;
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     view = inflater.inflate(R.layout.empty_fragment, container, false);
+
+
     return view;
+  }
+
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+
+    if(fragment != null && 1 > getChildFragmentManager().getBackStackEntryCount()){
+     getChildFragmentManager()
+        .beginTransaction()
+        .add(R.id.container, fragment)
+        .addToBackStack(null)
+        //  .commit()
+        .commitAllowingStateLoss()
+      ;
+      hoge = false;
+    }
+
   }
 
   public void back(){
@@ -37,8 +67,8 @@ public  View view;
       .beginTransaction()
         .add(R.id.container, new UnkoFragment())
       .addToBackStack(null)
-        //.commit()
-    .commitAllowingStateLoss()
+      //  .commit()
+      .commitAllowingStateLoss()
       ;
   }
 }
